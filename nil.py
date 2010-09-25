@@ -1,0 +1,4 @@
+class Nil(object):
+    pass
+
+
