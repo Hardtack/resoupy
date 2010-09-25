@@ -6,5 +6,7 @@ class Symbol(object):
         return ':' + self.symbolName
 
     def __cmp__(self, other):
-        return self.symbolName == other.symbolName
-
+        if self.symbolName == other.symbolName:
+            return 0
+        
+        return 1
