@@ -1,6 +1,5 @@
 from symbol import *
 from environment import *
-from function import *
 from resoupExceptions import *
 from nil import *
 from quote import *
@@ -9,7 +8,7 @@ def evaluate(form, env):
     if type(form) is Symbol:
         value = env.find(form)
         if value == None:
-            raise symbolNotFound
+            raise SymbolNotFound
         else:
             return value
             
