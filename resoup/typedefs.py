@@ -97,20 +97,6 @@ class Function(Type):
         self.env = env
         self.name = name
 
-    def apply(self, *args, **kwargs):
-        """Apply function
-        """
-        import evaluator
-        # Create new environment for function
-        new_env = Environment(self.env)
-
-        # Add given variables to new environment
-        for s, v in zip(self.args, args):
-            new_env[s] = v
-
-        # Evaluate body with new environment
-        return evaluator.eval(self.body, new_env)
-
     def __repr__(self):
         return '<Function(%s)>' % self.name
 
@@ -121,7 +107,15 @@ class Function(Type):
         return unicode(self).encode('utf-8')
 
     def __call__(self, *args, **kwargs):
-        return self.apply(args, kwargs)
+        import evaluator
+        new_env = Environment(self.env)
+        for s, v in zip(self.args, args):
+            new_env[s] = v
+        evaluator.eval(self.body, new_env)
+
+class BuiltinFunction(Function):
+    def apply(self, *args, **kwargs):
+        pass
 
 class Macro(Type):
     __metaclass__ = ABCMeta

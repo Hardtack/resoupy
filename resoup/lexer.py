@@ -34,8 +34,6 @@ class Lexer(object):
                 li.append(self.c)
             else:
                 s = self.read_symbol(io)
-                if len(s) == 0:
-                    break
                 li.append(s)
             self.skip_whitespaces(io)
         return li

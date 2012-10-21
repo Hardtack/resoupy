@@ -55,7 +55,6 @@ class ResoupTest(unittest.TestCase):
 
         self.assertEquals(li, parse(lexed))
 
-    """
     def test_eval(self):
         testcase = '''
         (define zero (lambda (f) (lambda (x) x)))
@@ -82,4 +81,3 @@ class ResoupTest(unittest.TestCase):
         resoup.stdout = stdout
         self.assertEquals('.' * 64, ''.join([x.strip() for x in
             output.split('\n')]))
-    """
