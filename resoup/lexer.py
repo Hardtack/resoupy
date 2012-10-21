@@ -1,0 +1,2 @@
+def lex(s):
+    pass
