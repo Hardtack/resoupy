@@ -208,13 +208,13 @@ class Function(Type):
         new_env = Environment(self.env)
         for s, v in zip(self.args, args):
             new_env[s] = v
-        evaluator.eval(self.body, new_env)
+        return evaluator.eval(self.body, new_env)
 
 class Macro(Type):
     __metaclass__ = ABCMeta
 
     @abstractmethod
-    def excute(self, *args, **kwargs):
+    def excute(self, env, *args, **kwargs):
         pass
 
     def __call__(self, *args, **kwargs):

@@ -1,4 +1,5 @@
 from . import typedefs as t
+
 def eval(obj, env):
     if isinstance(obj, t.Quote):
         return obj.item
@@ -8,10 +9,12 @@ def eval(obj, env):
         if len(obj) == 0:
             return t.Null()
         first = eval(obj[0], env)
+        print first, obj[1:]
         if isinstance(first, t.Function):
             return first(*map(lambda x:eval(x, env), obj[1:]))
         elif isinstance(first, t.Macro):
-            pass
+            return first(env, *obj[1:])
         else:
             raise TypeError('%s is not callable' % obj[0])
-    return obj
+    else:
+        return obj

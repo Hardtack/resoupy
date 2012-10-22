@@ -1,3 +1,4 @@
+import itertools
 from typedefs import Function
 
 class BuiltinFunction(Function):
@@ -8,23 +9,70 @@ class AddFunction(BuiltinFunction):
     def __init__(self, env):
         super(AddFunction, self).__init__('+', env)
 
-    __call__ = lambda self, *args:reduce(lambda x,y:x+y,(args))
+    def __call__(self, first, *args):
+        return reduce(lambda x,y:x+y, itertools.chain([first], args))
 
 class SubstractFunction(BuiltinFunction):
     def __init__(self, env):
         super(SubstractFunction, self).__init__('-', env)
-    __call__ = (lambda self, *args:reduce(lambda x,y:x-y, args)
-        if len(args) > 1 else -args[0])
+
+    def __call__(self, first, *args):
+        return (reduce(lambda x,y:x+y, itertools.chain([first], args))
+            if len(args) > 0 else -first)
+
 
 class MultiplyFunction(BuiltinFunction):
     def __init__(self, env):
         super(MultiplyFunction, self).__init__('+', env)
 
-    __call__ = lambda self, *args:reduce(lambda x,y:x*y, args)
+    def __call__(self, first, *args):
+        return reduce(lambda x,y:x*y, itertools.chain([first], args))
 
 class DivideFunction(BuiltinFunction):
     def __init__(self, env):
         super(DivideFunction, self).__init__('/', env)
 
-    __call__ = (lambda self, *args:reduce(lambda x,y:x/y,args)
-        if len(args) > 1 else 1 / args[0])
+    def __call__(self, first, *args):
+        return (reduce(lambda x,y:x/y, itertools.chain([first], args))
+            if len(args) > 0 else 1 / first)
+
+class GreaterFunction(BuiltinFunction):
+    def __init__(self, env):
+        super(GreaterFunction, self).__init__('>', env)
+
+    def __call__(self, first, second, *args):
+        for v in itertools.chain([second], args):
+            if not first > v:
+                return False
+        return True
+
+class GreaterEqualFunction(BuiltinFunction):
+    def __init__(self, env):
+        super(GreaterEqualFunction, self).__init__('>=', env)
+
+    def __call__(self, first, second, *args):
+        for v in itertools.chain([second], args):
+            if not first >= v:
+                return False
+        return True
+
+class LessFunction(BuiltinFunction):
+    def __init__(self, env):
+        super(LessFunction, self).__init__('<', env)
+
+    def __call__(self, first, second, *args):
+        for v in itertools.chain([second], args):
+            if not first < v:
+                return False
+        return True
+
+class LessEqualFunction(BuiltinFunction):
+    def __init__(self, env):
+        super(LessEqualFunction, self).__init__('<=', env)
+
+    def __call__(self, first, second, *args):
+        for v in itertools.chain([second], args):
+            if not first <= v:
+                return False
+        return True
+        
