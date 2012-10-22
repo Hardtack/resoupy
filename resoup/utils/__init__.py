@@ -4,7 +4,7 @@ from abc import ABCMeta, abstractmethod
 def is_float(s):
     """Check whether `s` is float number string or not.  
     """
-    if all(ord('0') <= c <= ord('9') or c == '.' for c in s):
+    if all(ord('0') <= ord(c) <= ord('9') or c == '.' for c in s):
         if s.count('.') == 1:
             return True
     return False
@@ -12,7 +12,7 @@ def is_float(s):
 def is_int(s):
     """Check whether `s` is integer string or not.  
     """
-    return all(ord('0') <= c <= ord('9') for c in s)
+    return all(ord('0') <= ord(c) <= ord('9') for c in s)
 
 
 class DictMixin(collections.Mapping):

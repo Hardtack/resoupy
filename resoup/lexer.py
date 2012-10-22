@@ -16,6 +16,8 @@ class Lexer(object):
                 break
 
     def read_str(self, io, quote):
+        """ Reads string body.  
+        """
         li = []
         while self.c != quote and self.c != '':
             li.append(self.c)
@@ -25,7 +27,7 @@ class Lexer(object):
                     break
                 li.append(self.c)
             self.c = io.read(1)
-        return ''.join(li).decode('string_escape')
+        return ''.join(li)
 
     def read_symbol(self, io):
         li = []
@@ -46,10 +48,16 @@ class Lexer(object):
                 li.append(self.c)
             elif self.c in ["'", '"']:
                 quote = self.c
+
+                # Append quote
                 li.append(self.c)
                 self.c = io.read(1)
                 s = self.read_str(io, quote)
+
+                # Append string body
                 li.append(s)
+
+                # Append quote if possible
                 if self.c == quote:
                     li.append(self.c)
             else:

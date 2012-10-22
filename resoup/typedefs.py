@@ -11,7 +11,8 @@ from env import Environment
 class Type(object):
     """Base class for resoup's type.  
     """
-    pass
+    def __ne__(self, other):
+        return not self == other
 
 class List(Type, list):
     """List type.  
@@ -29,6 +30,11 @@ class Symbol(Type):
 
     def __str__(self):
         return self.name
+
+    def __eq__(self, other):
+        if isinstance(other, Symbol):
+            return self.name == other.name
+        return False
 
 class String(Type, unicode):
     """Unicode string type.  

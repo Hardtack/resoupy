@@ -8,21 +8,22 @@ import StringIO
 import resoup
 from . import typedefs
 from lexer import Lexer
-from parser import parse
+from parser import Parser
 from evaluator import eval as evaluate
 
 class ResoupTest(unittest.TestCase):
     def test_lex(self):
-        expr = '(+ 1 2 ( 3 "this is\\nstring" `quote ? symbol) 1)'
+        expr = '(+ 1 2 ( 3 "this \\"is\\"\\nstring" `quote ? symbol) 1)'
         lexed = Lexer().lex(expr)
-        self.assertEquals(['(', '+', '1', '2', '(', '3', '"', 'this is\nstring',
-            '"', '`', 'quote', '?', 'symbol', ')', '1', ')'], lexed)
+        self.assertEquals(['(', '+', '1', '2', '(', '3', '"',
+            'this \\"is\\"\\nstring', '"', '`', 'quote', '?', 'symbol', ')',
+            '1', ')'], lexed)
 
     def test_parse(self):
         lexed = [
             '(', 'begin', '(', '+', '1', '2', '(', '-', '4', '3.5', ')', ')',
-            '(', 'display', "'", 'Message', "'", ')', '(', 'eval', '`', '1',
-            ')', ')' ]
+            '(', 'display', "'", "Message is\\n\\'Here\\'", "'", ')', '(',
+            'eval', '`', '1', ')', ')' ]
         li = typedefs.List()
         li.append(typedefs.Symbol('begin'))
 
@@ -42,7 +43,7 @@ class ResoupTest(unittest.TestCase):
 
         display = typedefs.List()
         display.append(typedefs.Symbol('display'))
-        display.append(typedefs.String('Message'))
+        display.append(typedefs.String("Message is\n'Here'"))
 
         li.append(display)
 
@@ -52,8 +53,8 @@ class ResoupTest(unittest.TestCase):
 
         li.append(ev)
 
-
-        self.assertEquals(li, parse(lexed))
+        parsed = Parser().parse(lexed)
+        self.assertEquals(li, parsed)
 
     def test_eval(self):
         testcase = '''
@@ -76,7 +77,7 @@ class ResoupTest(unittest.TestCase):
         for line in testcase.split('\n'):
             if line.strip() == '':
                 continue
-            evaluate(parse(Lexer().lex(testcase)))
+            evaluate(Parser().parse(Lexer().lex(testcase)))
         output = sio.getvalue()
         resoup.stdout = stdout
         self.assertEquals('.' * 64, ''.join([x.strip() for x in
