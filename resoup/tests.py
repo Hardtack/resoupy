@@ -81,8 +81,7 @@ class ResoupTest(unittest.TestCase):
         for line in testcase.split('\n'):
             if line.strip() == '':
                 continue
-            evaluate(Parser().parse(Lexer().lex(testcase)), env)
+            evaluate(Parser().parse(Lexer().lex(line)), env)
         output = sio.getvalue()
         resoup.globals.stdout = stdout
-        self.assertEquals('.' * 64, ''.join([x.strip() for x in
-            output.split('\n')]))
+        self.assertEquals('.' * 64, output.strip())

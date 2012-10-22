@@ -16,10 +16,14 @@ builtin_env[t.Symbol('>')] = f.GreaterFunction(builtin_env)
 builtin_env[t.Symbol('>=')] = f.GreaterEqualFunction(builtin_env)
 builtin_env[t.Symbol('<')] = f.LessFunction(builtin_env)
 builtin_env[t.Symbol('<=')] = f.LessEqualFunction(builtin_env)
+builtin_env[t.Symbol('display')] = f.DisplayFunction(builtin_env)
+builtin_env[t.Symbol('newline')] = f.NewlineFunction(builtin_env)
 
 # Macros
 builtin_env[t.Symbol('define')] = m.DefineMacro()
 builtin_env[t.Symbol('if')] = m.IfStatement()
+builtin_env[t.Symbol('begin')] = m.BeginMacro()
+builtin_env[t.Symbol('lambda')] = m.LambdaMacro()
 
 # Default values
 builtin_env[t.Symbol('true')] = t.Bool(True)

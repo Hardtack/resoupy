@@ -1,3 +1,4 @@
+import itertools
 import typedefs as t
 import evaluator as ev
 
@@ -21,3 +22,14 @@ class IfStatement(t.Macro):
             return ev.eval(true, env)
         else:
             return ev.eval(false, env)
+
+class BeginMacro(t.Macro):
+    def excute(self, env, first, *args):
+        last = t.Null()
+        for item in itertools.chain([first], args):
+            last = ev.eval(item, env)
+        return last
+
+class LambdaMacro(t.Macro):
+    def excute(self, env, args, body):
+        return t.Function(args, body, env)

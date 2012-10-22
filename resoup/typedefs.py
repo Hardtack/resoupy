@@ -197,12 +197,6 @@ class Function(Type):
     def __repr__(self):
         return '<Function(%s)>' % self.name
 
-    def __unicode__(self):
-        return str(self.body)
-
-    def __str__(self):
-        return unicode(self).encode('utf-8')
-
     def __call__(self, *args, **kwargs):
         import evaluator
         new_env = Environment(self.env)

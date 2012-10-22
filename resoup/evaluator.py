@@ -9,7 +9,6 @@ def eval(obj, env):
         if len(obj) == 0:
             return t.Null()
         first = eval(obj[0], env)
-        print first, obj[1:]
         if isinstance(first, t.Function):
             return first(*map(lambda x:eval(x, env), obj[1:]))
         elif isinstance(first, t.Macro):

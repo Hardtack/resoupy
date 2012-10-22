@@ -1,5 +1,5 @@
 import itertools
-from typedefs import Function
+from typedefs import Function, Null
 
 class BuiltinFunction(Function):
     def __init__(self, name, env):
@@ -17,9 +17,8 @@ class SubstractFunction(BuiltinFunction):
         super(SubstractFunction, self).__init__('-', env)
 
     def __call__(self, first, *args):
-        return (reduce(lambda x,y:x+y, itertools.chain([first], args))
+        return (reduce(lambda x,y:x-y, itertools.chain([first], args))
             if len(args) > 0 else -first)
-
 
 class MultiplyFunction(BuiltinFunction):
     def __init__(self, env):
@@ -75,4 +74,21 @@ class LessEqualFunction(BuiltinFunction):
             if not first <= v:
                 return False
         return True
-        
+
+class DisplayFunction(BuiltinFunction):
+    def __init__(self, env):
+        super(DisplayFunction, self).__init__('display', env)
+
+    def __call__(self, item):
+        import resoup.globals as g
+        g.stdout.write(str(item))
+        return Null()
+
+class NewlineFunction(BuiltinFunction):
+    def __init__(self, env):
+        super(NewlineFunction, self).__init__('newline', env)
+
+    def __call__(self):
+        import resoup.globals as g
+        g.stdout.write('\n')
+        return Null()

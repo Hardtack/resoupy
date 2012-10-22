@@ -22,10 +22,8 @@ while True:
         expr = sys.stdin.readline()
         item = p.parse(l.lex(expr))
         obj = ev.eval(item, env)
-        if isinstance(obj, t.Null):
-            stdprint('')
-        else:
-            stdprint(repr(obj))
+        if not isinstance(obj, t.Null):
+            stdprint(obj)
     except KeyboardInterrupt:
         print
         exit(0)
