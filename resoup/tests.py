@@ -13,10 +13,10 @@ from evaluator import eval as evaluate
 
 class ResoupTest(unittest.TestCase):
     def test_lex(self):
-        expr = '(+ 1 2 ( 3 "string" `quote ? symbol) 1)'
+        expr = '(+ 1 2 ( 3 "this is\\nstring" `quote ? symbol) 1)'
         lexed = Lexer().lex(expr)
-        self.assertEquals(['(', '+', '1', '2', '(', '3', '"','string','"', '`',
-            'quote', '?', 'symbol', ')', '1', ')'], lexed)
+        self.assertEquals(['(', '+', '1', '2', '(', '3', '"', 'this is\nstring',
+            '"', '`', 'quote', '?', 'symbol', ')', '1', ')'], lexed)
 
     def test_parse(self):
         lexed = [
