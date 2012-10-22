@@ -18,6 +18,17 @@ cd /path/for/resoup
 
 python setup.py install
 
+
+Run
+---
+
+   cd /path/for/resoup
+
+   python resoup
+
+   Welcome to resoup!
+   >>>
+
 Syntax
 ------
 
