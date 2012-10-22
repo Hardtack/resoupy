@@ -92,3 +92,10 @@ class NewlineFunction(BuiltinFunction):
         import resoup.globals as g
         g.stdout.write('\n')
         return Null()
+
+class ExitFunction(BuiltinFunction):
+    def __init__(self, env):
+        super(ExitFunction, self).__init__('exit', env)
+
+    def __call__(self, code=0):
+        exit(code)
