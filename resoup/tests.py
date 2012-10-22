@@ -6,10 +6,13 @@ Testcases for resoup
 import unittest
 import StringIO
 import resoup
+import resoup.globals
+from resoup.globals import builtin_env
 from . import typedefs
 from lexer import Lexer
 from parser import Parser
 from evaluator import eval as evaluate
+from env import Environment
 
 class ResoupTest(unittest.TestCase):
     def test_lex(self):
@@ -71,14 +74,15 @@ class ResoupTest(unittest.TestCase):
         (define sixty-four (xp two six))
         (prn sixty-four)
         '''
-        stdout = resoup.stdout
+        stdout = resoup.globals.stdout
         sio = StringIO.StringIO()
-        resoup.stdout = sio
+        resoup.globals.stdout = sio
+        env = Environment(builtin_env)
         for line in testcase.split('\n'):
             if line.strip() == '':
                 continue
-            evaluate(Parser().parse(Lexer().lex(testcase)))
+            evaluate(Parser().parse(Lexer().lex(testcase)), env)
         output = sio.getvalue()
-        resoup.stdout = stdout
+        resoup.globals.stdout = stdout
         self.assertEquals('.' * 64, ''.join([x.strip() for x in
             output.split('\n')]))

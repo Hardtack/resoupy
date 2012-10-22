@@ -34,5 +34,5 @@ class Environment(MutableDictMixin):
     def __delitem__(self, key):
         del self.dic[key]
 
-    def keys(self, key, value):
+    def keys(self):
         return self.dic.keys()

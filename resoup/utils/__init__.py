@@ -23,7 +23,7 @@ class DictMixin(collections.Mapping):
         pass
 
     @abstractmethod
-    def keys(self, key, value):
+    def keys(self):
         pass
 
     def __contains__(self, item):
@@ -75,7 +75,7 @@ class MutableDictMixin(collections.MutableMapping):
         pass
 
     @abstractmethod
-    def keys(self, key, value):
+    def keys(self):
         pass
 
     def __contains__(self, item):

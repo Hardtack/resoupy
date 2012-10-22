@@ -35,23 +35,85 @@ class Symbol(Type):
         if isinstance(other, Symbol):
             return self.name == other.name
         return False
+    
+    def __hash__(self):
+        return hash(self.name)
 
 class String(Type, unicode):
     """Unicode string type.  
     """
     pass
 
-class Int(Type, int):
+class Number(Type):
+    """Base number type.  
+    """
+    pass
+
+class Int(Number, int):
     """Integer type.  
     """
-    pass
+    def __add__(self, other):
+        return self.__class__(super(self.__class__,self).__add__(other))
+    def __sub__(self, other):
+        return self.__class__(super(self.__class__,self).__sub__(other))
+    def __mul__(self, other):
+        return self.__class__(super(self.__class__,self).__mul__(other))
+    def __floordiv__(self, other):
+        return self.__class__(super(self.__class__,self).__floordiv__(other))
+    def __mod__(self, other):
+        return self.__class__(super(self.__class__,self).__mod__(other))
+    def __divmod__(self, other):
+        return self.__class__(super(self.__class__,self).__divmod__(other))
+    def __pow__(self, other, *args):
+        return self.__class__(super(self.__class__,self).__pow__(other, *args))
+    def __lshift__(self, other):
+        return self.__class__(super(self.__class__,self).__lshift__(other))
+    def __rshift__(self, other):
+        return self.__class__(super(self.__class__,self).__rshift__(other))
+    def __and__(self, other):
+        return self.__class__(super(self.__class__,self).__and__(other))
+    def __xor__(self, other):
+        return self.__class__(super(self.__class__,self).__xor__(other))
+    def __or__(self, other):
+        return self.__class__(super(self.__class__,self).__or__(other))
+    def __div__(self, other):
+        return self.__class__(super(self.__class__,self).__div__(other))
+    def __truediv__(self, other):
+        return self.__class__(super(self.__class__,self).__truediv__(other))
 
-class Real(Type, float):
+class Real(Number, float):
     """Real number type.   
     """
-    pass
+    def __add__(self, other):
+        return self.__class__(super(self.__class__,self).__add__(other))
+    def __sub__(self, other):
+        return self.__class__(super(self.__class__,self).__sub__(other))
+    def __mul__(self, other):
+        return self.__class__(super(self.__class__,self).__mul__(other))
+    def __floordiv__(self, other):
+        return self.__class__(super(self.__class__,self).__floordiv__(other))
+    def __mod__(self, other):
+        return self.__class__(super(self.__class__,self).__mod__(other))
+    def __divmod__(self, other):
+        return self.__class__(super(self.__class__,self).__divmod__(other))
+    def __pow__(self, other, *args):
+        return self.__class__(super(self.__class__,self).__pow__(other, *args))
+    def __lshift__(self, other):
+        return self.__class__(super(self.__class__,self).__lshift__(other))
+    def __rshift__(self, other):
+        return self.__class__(super(self.__class__,self).__rshift__(other))
+    def __and__(self, other):
+        return self.__class__(super(self.__class__,self).__and__(other))
+    def __xor__(self, other):
+        return self.__class__(super(self.__class__,self).__xor__(other))
+    def __or__(self, other):
+        return self.__class__(super(self.__class__,self).__or__(other))
+    def __div__(self, other):
+        return self.__class__(super(self.__class__,self).__div__(other))
+    def __truediv__(self, other):
+        return self.__class__(super(self.__class__,self).__truediv__(other))
 
-class Bool(Type):
+class Bool(Number):
     """Boolean type.  
     """
     def __init__(self, value):
@@ -70,6 +132,35 @@ class Bool(Type):
 
     def __nonzero__(self):
         return self.value
+
+    def __add__(self, other):
+        return self.__class__(super(self.__class__,self).__add__(other))
+    def __sub__(self, other):
+        return self.__class__(super(self.__class__,self).__sub__(other))
+    def __mul__(self, other):
+        return self.__class__(super(self.__class__,self).__mul__(other))
+    def __floordiv__(self, other):
+        return self.__class__(super(self.__class__,self).__floordiv__(other))
+    def __mod__(self, other):
+        return self.__class__(super(self.__class__,self).__mod__(other))
+    def __divmod__(self, other):
+        return self.__class__(super(self.__class__,self).__divmod__(other))
+    def __pow__(self, other, *args):
+        return self.__class__(super(self.__class__,self).__pow__(other, *args))
+    def __lshift__(self, other):
+        return self.__class__(super(self.__class__,self).__lshift__(other))
+    def __rshift__(self, other):
+        return self.__class__(super(self.__class__,self).__rshift__(other))
+    def __and__(self, other):
+        return self.__class__(super(self.__class__,self).__and__(other))
+    def __xor__(self, other):
+        return self.__class__(super(self.__class__,self).__xor__(other))
+    def __or__(self, other):
+        return self.__class__(super(self.__class__,self).__or__(other))
+    def __div__(self, other):
+        return self.__class__(super(self.__class__,self).__div__(other))
+    def __truediv__(self, other):
+        return self.__class__(super(self.__class__,self).__truediv__(other))
 
 class Null(Type, NoneType):
     """Null type.  
@@ -118,10 +209,6 @@ class Function(Type):
         for s, v in zip(self.args, args):
             new_env[s] = v
         evaluator.eval(self.body, new_env)
-
-class BuiltinFunction(Function):
-    def apply(self, *args, **kwargs):
-        pass
 
 class Macro(Type):
     __metaclass__ = ABCMeta
