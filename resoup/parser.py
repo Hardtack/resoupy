@@ -23,6 +23,8 @@ class Parser(object):
         return t.String(body.decode('string_escape'))
 
     def read_item(self):
+        if len(self.buff) == 0:
+            return t.Null()
         token = self.buff.pop(0)
         if token == '(':
             return self.read_list(')')
