@@ -14,20 +14,20 @@ Resoup is interpreter of Lisp dialect
 Installation
 ------------
 
-cd /path/for/resoup
+    cd /path/for/resoup
 
-python setup.py install
+    python setup.py install
 
 
 Run
 ---
 
-   cd /path/for/resoup
+    cd /path/for/resoup
 
-   python resoup
+    python resoup
 
-   Welcome to resoup!
-   >>>
+    Welcome to resoup!
+    >>>
 
 Syntax
 ------
